@@ -1,7 +1,3 @@
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      혈당관리 프로젝트
-    </main>
-  );
+  return <main>혈당관리 프로젝트</main>;
 }
