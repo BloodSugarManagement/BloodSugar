@@ -8,7 +8,39 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: { "input-gray": "#726C6C" },
+      colors: { "main-gray": "#726C6C", "sub-gray": "#D9D9D9" },
+      fontSize: {
+        xs: [
+          "12px",
+          {
+            lineHeight: "18px",
+          },
+        ],
+        sm: [
+          "14px",
+          {
+            lineHeight: "22px",
+          },
+        ],
+        base: [
+          "16px",
+          {
+            lineHeight: "22px",
+          },
+        ],
+        lg: [
+          "20px",
+          {
+            lineHeight: "24px",
+          },
+        ],
+        xl: [
+          "32px",
+          {
+            lineHeight: "40px",
+          },
+        ],
+      },
     },
   },
   plugins: [],

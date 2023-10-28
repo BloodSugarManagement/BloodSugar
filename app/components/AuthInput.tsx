@@ -26,14 +26,14 @@ export default function AuthInput(props: AuthInputProps) {
   } = props;
   return (
     <>
-      <label htmlFor={htmlFor} className="text-xl block font-medium mb-2">
+      <label htmlFor={htmlFor} className="text-base block font-medium mb-2">
         {labelTxt}
       </label>
       <input
         name={name}
         type={type}
         id={id}
-        className="rounded-xl w-80 h-11 block border-2 border-input-gray pl-3 mb-8"
+        className="rounded-xl w-80 h-11 block border-2 border-main-gray pl-3 mb-8"
         placeholder={placeholder}
         value={value}
         onChange={onChange}

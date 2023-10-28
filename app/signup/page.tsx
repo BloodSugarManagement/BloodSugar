@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import AuthInput from "../components/AuthInput";
+import AuthBtn from "../components/AuthBtn";
+import TitleTxt from "../components/Titletxt";
 
 export default function SignUp() {
   const [authInp, setAuthInp] = useState({
@@ -19,37 +21,41 @@ export default function SignUp() {
   };
 
   return (
-    <form>
-      <AuthInput
-        name="email"
-        htmlFor="email"
-        id="email"
-        labelTxt="이메일"
-        placeholder="예) welcome@naver.com"
-        type="text"
-        value={authInp.email}
-        onChange={handleAuthInputChange}
-      />
-      <AuthInput
-        name="password"
-        htmlFor="password"
-        id="password"
-        labelTxt="비밀번호"
-        placeholder="숫자 포함 8글자 이상 입력해주세요"
-        type="password"
-        value={authInp.password}
-        onChange={handleAuthInputChange}
-      />
-      <AuthInput
-        name="passwordConfirm"
-        htmlFor="passwordConfirm"
-        id="passwordConfirm"
-        labelTxt="비밀번호 확인"
-        placeholder="숫자 포함 8글자 이상 입력해주세요"
-        type="password"
-        value={authInp.passwordConfirm}
-        onChange={handleAuthInputChange}
-      />
-    </form>
+    <>
+      <TitleTxt titleTxt="회원가입" />
+      <form>
+        <AuthInput
+          name="email"
+          htmlFor="email"
+          id="email"
+          labelTxt="이메일"
+          placeholder="예) welcome@naver.com"
+          type="text"
+          value={authInp.email}
+          onChange={handleAuthInputChange}
+        />
+        <AuthInput
+          name="password"
+          htmlFor="password"
+          id="password"
+          labelTxt="비밀번호"
+          placeholder="숫자 포함 8글자 이상 입력해주세요"
+          type="password"
+          value={authInp.password}
+          onChange={handleAuthInputChange}
+        />
+        <AuthInput
+          name="passwordConfirm"
+          htmlFor="passwordConfirm"
+          id="passwordConfirm"
+          labelTxt="비밀번호 확인"
+          placeholder="숫자 포함 8글자 이상 입력해주세요"
+          type="password"
+          value={authInp.passwordConfirm}
+          onChange={handleAuthInputChange}
+        />
+        <AuthBtn btnTxt="회원가입" />
+      </form>
+    </>
   );
 }
