@@ -8,7 +8,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: { "main-gray": "#726C6C", "sub-gray": "#D9D9D9" },
+      colors: {
+        "main-gray": "#726C6C",
+        "sub-gray": "#D9D9D9",
+        "selected-yellow": "#F5C045",
+      },
       fontSize: {
         xs: [
           "12px",
