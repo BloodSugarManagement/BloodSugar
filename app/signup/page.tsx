@@ -4,6 +4,7 @@ import { useState } from "react";
 import AuthInput from "../components/AuthInput";
 import AuthBtn from "../components/AuthBtn";
 import TitleTxt from "../components/Titletxt";
+import SelectAge from "./SelectAge";
 
 export default function SignUp() {
   const [authInp, setAuthInp] = useState({
@@ -54,6 +55,7 @@ export default function SignUp() {
           value={authInp.passwordConfirm}
           onChange={handleAuthInputChange}
         />
+        <SelectAge />
         <AuthBtn btnTxt="회원가입" />
       </form>
     </>
