@@ -4,7 +4,7 @@ interface AuthBtnProps {
 
 export default function AuthBtn({ btnTxt }: AuthBtnProps) {
   return (
-    <button className="w-80 h-14 bg-sub-gray rounded-full text-white font-semibold text-lg">
+    <button className="w-80 h-14 bg-sub-gray rounded-full text-white font-semibold text-lg mt-8">
       {btnTxt}
     </button>
   );
