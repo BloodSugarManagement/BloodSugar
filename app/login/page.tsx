@@ -25,6 +25,9 @@ export default function Login() {
     password: false,
   });
 
+  // pass가 true로 바뀌면 버튼 활성화
+  const isFormValid = isValid.email && isValid.password;
+
   const handleAuthInputChange = (e: any) => {
     // 입력 값 업데이트
     const { value, name } = e.target;
@@ -87,7 +90,7 @@ export default function Login() {
         {error.passwordErrorTxt && (
           <ErrorTxt errorTxt={error.passwordErrorTxt} />
         )}
-        <AuthBtn btnTxt={"이메일로 로그인하기"} />
+        <AuthBtn btnTxt={"이메일로 로그인하기"} disabled={!isFormValid} />
       </form>
       <p className="text-sm text-center mt-8">이메일로 회원가입</p>
       <div className="flex justify-center gap-8 mt-8">

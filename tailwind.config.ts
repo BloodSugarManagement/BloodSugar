@@ -12,6 +12,7 @@ const config: Config = {
         "main-gray": "#726C6C",
         "sub-gray": "#D9D9D9",
         "selected-yellow": "#F5C045",
+        "main-red": "#F65C5C",
       },
       fontSize: {
         xs: [
