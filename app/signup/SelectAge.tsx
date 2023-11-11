@@ -1,4 +1,8 @@
-export default function SelectAge() {
+interface SelectAge {
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+
+export default function SelectAge({ onChange }: SelectAge) {
   return (
     <div>
       <label htmlFor="ageGroup" className="text-base block font-medium mb-2">
@@ -8,6 +12,8 @@ export default function SelectAge() {
         name="ageGroup"
         id="ageGroup"
         className="mb-8 w-40 text-center h-11 border-2 border-main-gray rounded-xl"
+        onChange={onChange}
+        required
       >
         <option value="20s">20대</option>
         <option value="30s">30대</option>
