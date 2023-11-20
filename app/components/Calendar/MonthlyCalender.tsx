@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { GrPrevious } from "react-icons/gr";
 import { GrNext } from "react-icons/gr";
+import { BsPlusCircleFill } from "react-icons/bs";
 import RecordTab from "../InfoTab/RecordTab";
 import SugarBloodHistory from "../InfoTab/SugarBloodHistory";
 import MemoHistory from "../InfoTab/MemoHistory";
@@ -126,7 +127,12 @@ export default function MonthlyCalender() {
           );
         })}
       </div>
-      <span>{dateString}</span>
+      <div className="flex justify-between p-2 font-normal">
+        <span className="inline-block">{dateString}</span>
+        <button>
+          <BsPlusCircleFill />
+        </button>
+      </div>
       <section className="flex flex-col mt-3">
         <div className="flex">
           {menuArr.map((tab, index) => {
