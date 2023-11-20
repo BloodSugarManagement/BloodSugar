@@ -1,4 +1,4 @@
-import MonthlyCalender from "../components/Calender/MonthlyCalender";
+import MonthlyCalender from "../components/Calendar/MonthlyCalender";
 import Titletxt from "../components/Titletxt";
 
 export default function Record() {
