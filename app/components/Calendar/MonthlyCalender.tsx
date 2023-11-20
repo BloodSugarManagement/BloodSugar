@@ -2,8 +2,22 @@
 import { useEffect, useState } from "react";
 import { GrPrevious } from "react-icons/gr";
 import { GrNext } from "react-icons/gr";
+import RecordTab from "../InfoTab/RecordTab";
+import SugarBloodHistory from "../InfoTab/SugarBloodHistory";
+import MemoHistory from "../InfoTab/MemoHistory";
 
 export default function MonthlyCalender() {
+  const [currentTab, setTab] = useState(0);
+
+  const menuArr = [
+    { name: "혈당기록", content: <SugarBloodHistory /> },
+    { name: "메모", content: <MemoHistory /> },
+  ];
+
+  const selectTabHandler = (tabIndex: number) => {
+    setTab(tabIndex);
+  };
+
   const dayOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
 
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -66,18 +80,18 @@ export default function MonthlyCalender() {
   }, [currentMonth]);
 
   return (
-    <section className="bg-white p-2.5">
-      <div className="flex items-center justify-between p-4">
+    <div className="bg-white p-2.5">
+      <section className="flex items-center justify-between p-4">
         <button onClick={movePrevMonth}>
           <GrPrevious />
         </button>
-        <span className="text-sm">
+        <span className="text-base">
           {currentMonth.getFullYear()}. {currentMonth.getMonth() + 1}
         </span>
         <button onClick={moveNextMonth}>
           <GrNext />
         </button>
-      </div>
+      </section>
       <div className="grid grid-cols-7 py-2.5 px-4 text-center border-y border-gray-300">
         {dayOfWeek.map((day, index) => (
           <div key={index} className={`${day === "일" ? "text-red-600" : ""}`}>
@@ -99,6 +113,24 @@ export default function MonthlyCalender() {
           );
         })}
       </div>
-    </section>
+      <section className="flex flex-col mt-3">
+        <div className="flex">
+          {menuArr.map((tab, index) => {
+            return (
+              <div
+                key={index}
+                onClick={() => selectTabHandler(index)}
+                className={`flex-1 py-2 h-10 text-center cursor-pointer border-b-4 ${
+                  currentTab === index ? "border-orange-600 " : "border-inherit"
+                }`}
+              >
+                {tab.name}
+              </div>
+            );
+          })}
+        </div>
+        <div>{menuArr[currentTab].content}</div>
+      </section>
+    </div>
   );
 }
