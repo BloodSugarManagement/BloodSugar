@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      width: {
+        "88": "22rem", // 352px
+      },
       colors: {
         "main-gray": "#726C6C",
         "sub-gray": "#D9D9D9",
