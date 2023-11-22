@@ -47,9 +47,7 @@ function Anchor({ name, href, image, selectedImage }: Router) {
   const pathname = usePathname();
 
   return (
-    <li
-      className={"flex-1" + (pathname === href ? " text-selected-yellow" : "")}
-    >
+    <li className={"flex-1" + (pathname === href ? " text-[#F5C045]" : "")}>
       <Link
         href={href}
         className="flex flex-col items-center text-xs text-center gap-1"

@@ -1,10 +1,12 @@
-import ChartSection from "../components/ChartSection";
+import ChartForm from "../components/Chart/ChartForm";
 
 export default function Chart() {
   return (
-    <>
-      <h2 className="text-xl font-extrabold">혈당 차트</h2>
-      <ChartSection />
-    </>
+    <section className="w-full h-full">
+      <h2 className="text-xl font-extrabold text-left w-full indent-3.5">
+        혈당 차트
+      </h2>
+      <ChartForm />
+    </section>
   );
 }
