@@ -107,7 +107,7 @@ export default function MonthlyCalender() {
             <GrNext />
           </button>
         </nav>
-        <div className="grid grid-cols-7 py-2.5 px-4 h-4/5 font-light text-center border-y border-gray-300">
+        <div className="grid grid-cols-7 justify-items-center	py-2.5 px-4 h-4/5 font-light text-center border-y border-gray-300">
           {dayOfWeek.map((day, index) => (
             <div
               key={index}
@@ -127,7 +127,7 @@ export default function MonthlyCalender() {
             return (
               <div
                 key={index}
-                className={`flex justify-center items-center w-full h-full ${
+                className={`flex justify-center items-center w-[37px] h-full ${
                   date.getMonth() !== currentMonth.getMonth()
                     ? "text-gray-300"
                     : ""
