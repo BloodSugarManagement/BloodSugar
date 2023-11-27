@@ -1,14 +1,10 @@
 interface TitleTxtProps {
   titleTxt: string;
-  center?: "text-center" | null;
 }
 
-export default function TitleTxt({
-  titleTxt,
-  center = "text-center",
-}: TitleTxtProps) {
+export default function TitleTxt({ titleTxt }: TitleTxtProps) {
   return (
-    <h1 className={`mt-12 mb-12 text-xl font-extrabold ${center}`}>
+    <h1 className={`mt-8 mb-8 text-xl font-extrabold text-center`}>
       {titleTxt}
     </h1>
   );

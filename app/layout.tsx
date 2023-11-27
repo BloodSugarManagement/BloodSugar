@@ -21,7 +21,9 @@ export default function RootLayout({
     <html>
       <body className={`w-screen h-screen ${fonts.className}`}>
         <main className="w-full h-full flex justify-center">
-          <div className="w-full h-full max-w-screen-md">{children}</div>
+          <div className="w-full h-full max-w-screen-md shadow-lg gray-500/50">
+            {children}
+          </div>
         </main>
       </body>
     </html>
