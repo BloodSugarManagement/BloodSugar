@@ -13,7 +13,7 @@ interface Router {
 export default function NavBar() {
   const home: Router = {
       name: "홈",
-      href: "/",
+      href: "/record",
       image: "/image/unselectedHome.svg",
       selectedImage: "/image/selectedHome.svg",
     },
@@ -33,7 +33,7 @@ export default function NavBar() {
   const Routes: Router[] = [home, chart, profile];
 
   return (
-    <footer className="sticky bottom-0 w-full border-t pt-3 pb-1">
+    <footer className="sticky bottom-0 w-full border-t pt-3 pb-1 bg-white">
       <ul className="flex">
         {Routes.map((route) => (
           <Anchor {...route} key={route.name} />
@@ -47,7 +47,12 @@ function Anchor({ name, href, image, selectedImage }: Router) {
   const pathname = usePathname();
 
   return (
-    <li className={"flex-1" + (pathname === href ? " text-[#F5C045]" : "")}>
+    <li
+      className={
+        "flex-1 sticky bottom-0 bg-white" +
+        (pathname === href ? " text-[#F5C045]" : "")
+      }
+    >
       <Link
         href={href}
         className="flex flex-col items-center text-xs text-center gap-1"
