@@ -93,7 +93,7 @@ export default function MonthlyCalender() {
   };
 
   return (
-    <div className="bg-white p-2.5 font-mono">
+    <div className="bg-white p-2.5">
       <section className="h-[300px]">
         <nav className="flex items-center justify-between py-2.5 px-6 h-1/5">
           <button onClick={movePrevMonth}>
