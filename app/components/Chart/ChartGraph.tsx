@@ -15,7 +15,7 @@ interface Props {
 
 export default function ChartGraph({ XKey, YKey }: Props) {
   return (
-    <ResponsiveContainer width="100%" height="50%">
+    <ResponsiveContainer width="100%" height={300}>
       <LineChart
         width={500}
         height={300}
@@ -28,7 +28,7 @@ export default function ChartGraph({ XKey, YKey }: Props) {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="날짜" tickFormatter={formatX} />
+        <XAxis dataKey="날짜" tickFormatter={formatX} dy={10} />
         <YAxis
           tickCount={10}
           domain={[20, 200]}
