@@ -4,7 +4,13 @@ interface Props extends InputHTMLAttributes<{}> {
   text: string;
 }
 
-export default function ChartCategory({ id, name, text, ...props }: Props) {
+export default function ChartCategory({
+  id,
+  name,
+  text,
+  checked,
+  ...props
+}: Props) {
   return (
     <li>
       <input
@@ -13,6 +19,7 @@ export default function ChartCategory({ id, name, text, ...props }: Props) {
         value={id}
         className="peer"
         type="radio"
+        checked={checked}
         hidden
       />
       <label

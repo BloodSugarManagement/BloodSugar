@@ -15,7 +15,7 @@ export default function Home() {
       if (!loading && isLogin) router.push("/record");
       else if (!loading && !isLogin) router.push("/login");
       setLoading(false);
-    }, 3000);
+    }, 1500);
   }, []);
 
   return (
