@@ -5,6 +5,7 @@ import { GrNext } from "react-icons/gr";
 import { BsPlusCircleFill } from "react-icons/bs";
 import SugarBloodHistory from "../InfoTab/SugarBloodHistory";
 import MemoHistory from "../InfoTab/MemoHistory";
+import SugarBloodModal from "../Modal/SugarBloodModal";
 
 export default function MonthlyCalender() {
   const [currentTab, setTab] = useState(0);
@@ -92,6 +93,8 @@ export default function MonthlyCalender() {
     );
   };
 
+  const openModal = (today: string) => {};
+
   return (
     <div className="bg-white p-2.5">
       <section className="h-[300px]">
@@ -141,7 +144,7 @@ export default function MonthlyCalender() {
       </section>
       <div className="flex justify-between items-center p-2 h-[50px]">
         <span className="inline-block">{dateString}</span>
-        <button>
+        <button onClick={() => openModal(dateString)}>
           <BsPlusCircleFill size="24" />
         </button>
       </div>
@@ -165,6 +168,7 @@ export default function MonthlyCalender() {
         </div>
         <div>{menuArr[currentTab].content}</div>
       </section>
+      <SugarBloodModal />
     </div>
   );
 }
