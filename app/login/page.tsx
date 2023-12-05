@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import AuthInput from "../components/AuthInput";
 import AuthBtn from "../components/AuthBtn";
 import TitleTxt from "../components/Titletxt";
@@ -9,6 +10,8 @@ import { formValidate } from "../utils/formValidate";
 import regex from "../utils/regex";
 
 export default function Login() {
+  const router = useRouter();
+
   const [authInp, setAuthInp] = useState({
     email: "",
     password: "",
@@ -31,6 +34,7 @@ export default function Login() {
   const handleAuthInputChange = (e: any) => {
     // 입력 값 업데이트
     const { value, name } = e.target;
+    console.log(e.target);
     setAuthInp({
       ...authInp,
       [name]: value,
@@ -62,10 +66,37 @@ export default function Login() {
     }
   };
 
+  const BASE_URL = "http://52.78.93.9:8000";
+
+  const handleLogin = async (event: any) => {
+    event.preventDefault();
+    const res = await fetch(`${BASE_URL}/accounts/login/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: authInp.email,
+        password: authInp.password,
+      }),
+    });
+
+    const resJson = await res.json();
+
+    localStorage.setItem(
+      "loginStorage",
+      JSON.stringify({
+        token: resJson.access,
+      })
+    );
+
+    router.push("record");
+  };
+
   return (
     <div>
       <TitleTxt titleTxt="로그인" />
-      <form>
+      <form onSubmit={handleLogin}>
         <AuthInput
           name="email"
           htmlFor="email"
