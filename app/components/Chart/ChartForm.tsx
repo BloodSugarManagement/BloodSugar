@@ -32,7 +32,7 @@ export default function ChartForm() {
   const fetchData = async () => {
     // const token = localStorage.getItem('token');
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAxNjA0OTY0LCJpYXQiOjE3MDE1OTc3NjQsImp0aSI6ImNiZTA3NWQ0MTNhMDQ4NTA4MDkxODY1YmMwNDllMzQzIiwidXNlcl9pZCI6OX0.jYkq6bAtKbk3L0kH-wNxP-1ghybvFbj5OfOR00qnyOY";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAxNzczOTczLCJpYXQiOjE3MDE3NjY3NzMsImp0aSI6ImM4NzdkN2Y1YzVlNzQzYTJiNDc1MDZlZDA1YTIyM2E1IiwidXNlcl9pZCI6N30.nxjEe5Eh38fr3NAPbrL6HsIQ9Ew1bOrH419tvqa57ww";
 
     if (token) {
       const res = await fetch(`${apiUrl}${dateFilter[category.날짜]}/`, {
