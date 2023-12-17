@@ -48,8 +48,17 @@ const config: Config = {
           },
         ],
       },
+      animation: {
+        fadeIn: "fadeIn 0.15s ease-in-out",
+      },
+      keyframes: {
+        fadeIn: {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+      },
     },
+    plugins: [],
   },
-  plugins: [],
 };
 export default config;
