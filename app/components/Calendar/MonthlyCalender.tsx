@@ -9,8 +9,12 @@ import SugarBloodModal from "../Modal/SugarBloodModal";
 
 export default function MonthlyCalender() {
   const [currentTab, setTab] = useState(0);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const openModal = () => setModalIsOpen(true);
 
-  const menuArr = [
+  const closeModal = () => setModalIsOpen(false);
+
+  const tabArr = [
     { name: "혈당기록", content: <SugarBloodHistory /> },
     { name: "메모", content: <MemoHistory /> },
   ];
@@ -93,8 +97,6 @@ export default function MonthlyCalender() {
     );
   };
 
-  const openModal = (today: string) => {};
-
   return (
     <div className="bg-white p-2.5">
       <section className="h-[300px]">
@@ -144,13 +146,13 @@ export default function MonthlyCalender() {
       </section>
       <div className="flex justify-between items-center p-2 h-[50px]">
         <span className="inline-block">{dateString}</span>
-        <button onClick={() => openModal(dateString)}>
-          <BsPlusCircleFill size="24" />
+        <button onClick={() => openModal()}>
+          <BsPlusCircleFill size="24" className="hover:animate-bounce" />
         </button>
       </div>
       <section className="flex flex-col">
         <div className="flex">
-          {menuArr.map((tab, index) => {
+          {tabArr.map((tab, index) => {
             return (
               <div
                 key={index}
@@ -166,9 +168,9 @@ export default function MonthlyCalender() {
             );
           })}
         </div>
-        <div>{menuArr[currentTab].content}</div>
+        <div>{tabArr[currentTab].content}</div>
       </section>
-      <SugarBloodModal />
+      <SugarBloodModal isOpen={modalIsOpen} closeModal={closeModal} />
     </div>
   );
 }
