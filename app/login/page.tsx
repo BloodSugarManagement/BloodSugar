@@ -83,12 +83,7 @@ export default function Login() {
 
     const resJson = await res.json();
 
-    localStorage.setItem(
-      "loginStorage",
-      JSON.stringify({
-        token: resJson.access,
-      })
-    );
+    localStorage.setItem("token", resJson.access);
 
     router.push("record");
   };

@@ -3,38 +3,43 @@ import { useEffect, useState } from "react";
 import { GrPrevious } from "react-icons/gr";
 import { GrNext } from "react-icons/gr";
 import { BsPlusCircleFill } from "react-icons/bs";
-import SugarBloodHistory from "../InfoTab/SugarBloodHistory";
+import BloodSugarHistory from "../InfoTab/BloodSugarHistory";
 import MemoHistory from "../InfoTab/MemoHistory";
-import SugarBloodModal from "../Modal/SugarBloodModal";
+import BloodSugarModal from "../Modal/BloodSugarModal";
 
-export default function MonthlyCalender() {
+const dayOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
+const today = new Date();
+const BASE_URL = "http://52.78.93.9:8000";
+
+export default function Monthlycalendar() {
+  const tokenInfo = localStorage.getItem("token");
+
   const [currentTab, setTab] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const openModal = () => setModalIsOpen(true);
+  const [isData, setIsData] = useState(false);
+  const [bloodSugarData, setBloodSugarData] = useState({
+    after_evening: 0,
+    after_lunch: 0,
+    after_morning: 0,
+    before_evening: 0,
+    before_lunch: 0,
+    before_morning: 0,
+    empty_stomach: 0,
+  });
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(today);
+  const [calendarData, setCalendarData] = useState<Date[]>([]);
 
-  const closeModal = () => setModalIsOpen(false);
-
-  const tabArr = [
-    { name: "혈당기록", content: <SugarBloodHistory /> },
-    { name: "메모", content: <MemoHistory /> },
-  ];
-
-  const selectTabHandler = (tabIndex: number) => {
-    setTab(tabIndex);
+  const dateFormatStr = (selectedDate: Date) => {
+    const year = selectedDate.getFullYear();
+    const month = ("0" + (selectedDate.getMonth() + 1)).slice(-2);
+    const date = ("0" + selectedDate.getDate()).slice(-2);
+    return year + "-" + month + "-" + date;
   };
 
-  const dayOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
+  const selectedDay = dateFormatStr(selectedDate).split("-");
 
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = ("0" + (today.getMonth() + 1)).slice(-2);
-  const date = ("0" + today.getDate()).slice(-2);
-  const [currentMonth, setCurrentMonth] = useState(new Date());
-  //const [selectedDate, setSelectedDate] = useState(today);
-
-  var dateString = year + "-" + month + "-" + date;
-
-  const buildCalendarDays = () => {
+  const buildCalendarDays = function () {
     const selectedDate = {
       year: currentMonth.getFullYear(),
       month: currentMonth.getMonth(),
@@ -72,11 +77,12 @@ export default function MonthlyCalender() {
         })
       );
     }
-
     return days;
   };
 
-  const calenderData = buildCalendarDays();
+  useEffect(() => {
+    setCalendarData(buildCalendarDays());
+  }, [currentMonth]);
 
   const movePrevMonth = () => {
     setCurrentMonth(
@@ -96,6 +102,65 @@ export default function MonthlyCalender() {
       )
     );
   };
+
+  // 날짜별 혈당 보기
+  const selectDate = (selectDate: Date) => {
+    //console.log("혈당보기 함수 돔");
+    setSelectedDate(selectDate);
+  };
+
+  // 탭
+  const tabArr = [
+    {
+      name: "혈당기록",
+      content: <BloodSugarHistory isData={isData} data={bloodSugarData} />,
+    },
+    {
+      name: "메모",
+      content: <MemoHistory dateStr={dateFormatStr(selectedDate)} />,
+    },
+  ];
+
+  const selectTabHandler = (tabIndex: number, tabName: string) => {
+    setTab(tabIndex);
+    if (tabName === "메모") {
+    }
+  };
+
+  // 혈당 데이터조회
+  const getBloodSugarData = async () => {
+    const res = await fetch(
+      `${BASE_URL}/api/management/${selectedDay[0]}/${selectedDay[1]}/${selectedDay[2]}`,
+      {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${tokenInfo}`,
+        },
+      }
+    );
+    const resJson = await res.json();
+    if (
+      resJson.after_evening === 0 &&
+      resJson.after_lunch === 0 &&
+      resJson.after_morning === 0 &&
+      resJson.before_evening === 0 &&
+      resJson.before_lunch === 0 &&
+      resJson.before_morning === 0 &&
+      resJson.empty_stomach === 0
+    ) {
+      setIsData(false);
+    } else {
+      setIsData(true);
+      setBloodSugarData({ ...resJson });
+    }
+  };
+
+  useEffect(() => {
+    getBloodSugarData();
+  }, [selectedDate]);
+
+  const openModal = () => setModalIsOpen(true);
+  const closeModal = () => setModalIsOpen(false);
 
   return (
     <div className="bg-white p-2.5">
@@ -123,20 +188,21 @@ export default function MonthlyCalender() {
               {day}
             </div>
           ))}
-          {calenderData.map((date, index) => {
+          {calendarData.map((date, index) => {
             const isDateEqual =
               date.getFullYear() === today.getFullYear() &&
               date.getMonth() === today.getMonth() &&
               date.getDate() === today.getDate();
 
+            const isNowMonth = date.getMonth() === currentMonth.getMonth();
+
             return (
               <div
                 key={index}
                 className={`flex justify-center items-center w-[37px] h-full ${
-                  date.getMonth() !== currentMonth.getMonth()
-                    ? "text-gray-300"
-                    : ""
+                  !isNowMonth ? "text-gray-300" : "cursor-pointer"
                 } ${isDateEqual ? "rounded-full bg-[#F5F0D4]" : ""}`}
+                onClick={!isNowMonth ? undefined : () => selectDate(date)}
               >
                 {date.getDate()}
               </div>
@@ -145,7 +211,7 @@ export default function MonthlyCalender() {
         </div>
       </section>
       <div className="flex justify-between items-center p-2 h-[50px]">
-        <span className="inline-block">{dateString}</span>
+        <span className="inline-block">{dateFormatStr(selectedDate)}</span>
         <button onClick={() => openModal()}>
           <BsPlusCircleFill size="24" className="hover:animate-bounce" />
         </button>
@@ -156,7 +222,7 @@ export default function MonthlyCalender() {
             return (
               <div
                 key={index}
-                onClick={() => selectTabHandler(index)}
+                onClick={() => selectTabHandler(index, tab.name)}
                 className={`flex-1 py-2 h-10 text-center cursor-pointer border-b-4 ${
                   currentTab === index
                     ? "text-[#F47171] border-[#F47171]"
@@ -170,7 +236,12 @@ export default function MonthlyCalender() {
         </div>
         <div>{tabArr[currentTab].content}</div>
       </section>
-      <SugarBloodModal isOpen={modalIsOpen} closeModal={closeModal} />
+      <BloodSugarModal
+        isOpen={modalIsOpen}
+        dateStr={dateFormatStr(selectedDate)}
+        bloodSugarData={bloodSugarData}
+        closeModal={closeModal}
+      />
     </div>
   );
 }

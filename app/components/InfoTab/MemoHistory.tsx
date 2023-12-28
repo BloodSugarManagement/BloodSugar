@@ -1,10 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-export default function memoHistory() {
+interface MemoHistoryProps {
+  dateStr: string;
+}
+
+export default function memoHistory({ dateStr }: MemoHistoryProps) {
+  const tokenInfo = localStorage.getItem("token");
+  const selectedDay = dateStr.split("-");
+  const [memoData, setMemoData] = useState<string | null>(null);
+
+  useEffect(() => {
+    console.log("memo");
+    const fetchMemoData = async () => {
+      try {
+        if (dateStr) {
+          const res = await fetch(
+            `http://52.78.93.9:8000/api/management/${selectedDay[0]}/${selectedDay[1]}/${selectedDay[2]}/feedback/`,
+            {
+              method: "GET",
+              headers: {
+                authorization: `Bearer ${tokenInfo}`,
+              },
+            }
+          );
+
+          if (res.ok) {
+            const data = await res.json();
+            setMemoData(data.memo);
+          } else {
+            console.error("Failed to fetch memo data", res.status);
+            setMemoData(null);
+          }
+        }
+      } catch (error) {
+        console.error("An error occurred while fetching memo data:", error);
+        setMemoData(null);
+      }
+    };
+
+    fetchMemoData();
+  }, [dateStr, tokenInfo]);
+
   return (
     <div className="min-h-[200px] my-3 rounded-lg bg-[#F5F0D4] text-center">
-      {/* 선택된 날짜에 혈당기록이 하나도 없다면 */}
-      <p>오늘은 초콜릿을 5개나 먹어버렸다!! ㅠㅠ</p>
+      {memoData ? <p>{memoData}</p> : <p>메모가 없습니다.</p>}
     </div>
   );
 }
