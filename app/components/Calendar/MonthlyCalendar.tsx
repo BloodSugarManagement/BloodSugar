@@ -12,7 +12,7 @@ const today = new Date();
 const BASE_URL = "http://52.78.93.9:8000";
 
 export default function Monthlycalendar() {
-  const tokenInfo = localStorage.getItem("token");
+  const tokenInfo = localStorage.getItem("access");
 
   const [currentTab, setTab] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
