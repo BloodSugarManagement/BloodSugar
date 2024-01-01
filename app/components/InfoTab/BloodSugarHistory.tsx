@@ -29,7 +29,7 @@ export default function sugarBloodHistory({ isData, data }: bsTabProps) {
               const afterKey = `after_${category.engName}`;
 
               return (
-                <div className="block">
+                <div key={category.engName} className="block">
                   <img
                     src={category.imgSrc}
                     alt={category.name}

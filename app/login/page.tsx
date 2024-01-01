@@ -8,6 +8,7 @@ import TitleTxt from "../components/Titletxt";
 import ErrorTxt from "../components/ErrorTxt";
 import { formValidate } from "../utils/formValidate";
 import regex from "../utils/regex";
+import { apiService } from "../services/apiService";
 
 export default function Login() {
   const router = useRouter();
@@ -66,24 +67,23 @@ export default function Login() {
     }
   };
 
-  const BASE_URL = "http://52.78.93.9:8000";
-
   const handleLogin = async (event: any) => {
     event.preventDefault();
-    const res = await fetch(`${BASE_URL}/accounts/login/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+
+    try {
+      const response = await apiService.post("/accounts/login/", {
         email: authInp.email,
         password: authInp.password,
-      }),
-    });
+      });
 
-    const resJson = await res.json();
+      const accessToken = response.data.access;
+      const refreshToken = response.data.refresh;
 
-    localStorage.setItem("token", resJson.access);
+      localStorage.setItem("access", accessToken);
+      localStorage.setItem("refresh", refreshToken);
+    } catch (error: any) {
+      console.error("Login failed:", error.message);
+    }
 
     router.push("record");
   };
