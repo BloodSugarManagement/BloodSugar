@@ -8,7 +8,7 @@ interface bsTabProps {
   data: BloodSugarData;
 }
 
-export default function sugarBloodHistory({ isData, data }: bsTabProps) {
+export default function BloodSugarHistory({ isData, data }: bsTabProps) {
   const timeCategory = [
     { name: "아침", engName: "morning", imgSrc: "image/sunrise-icon.png" },
     { name: "점심", engName: "lunch", imgSrc: "image/sun-icon.png" },
