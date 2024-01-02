@@ -1,4 +1,4 @@
-import { authApiService } from "@/app/services/apiService";
+import { authApiService } from "../../services/apiService";
 import React, { useEffect, useState } from "react";
 
 interface BloodSugarData {

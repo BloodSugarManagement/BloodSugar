@@ -6,7 +6,7 @@ import { BsPlusCircleFill } from "react-icons/bs";
 import BloodSugarHistory from "../InfoTab/BloodSugarHistory";
 import MemoHistory from "../InfoTab/MemoHistory";
 import BloodSugarModal from "../Modal/BloodSugarModal";
-import { authApiService } from "@/app/services/apiService";
+import { authApiService } from "../../services/apiService";
 
 const dayOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
 const today = new Date();
