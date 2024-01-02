@@ -6,18 +6,20 @@ import { BsPlusCircleFill } from "react-icons/bs";
 import BloodSugarHistory from "../InfoTab/BloodSugarHistory";
 import MemoHistory from "../InfoTab/MemoHistory";
 import BloodSugarModal from "../Modal/BloodSugarModal";
+import { authApiService } from "@/app/services/apiService";
 
 const dayOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
 const today = new Date();
-const BASE_URL = "http://52.78.93.9:8000";
+
+interface BloodSugarData {
+  [key: string]: number;
+}
 
 export default function Monthlycalendar() {
-  const tokenInfo = localStorage.getItem("access");
-
   const [currentTab, setTab] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isData, setIsData] = useState(false);
-  const [bloodSugarData, setBloodSugarData] = useState({
+  const [bloodSugarData, setBloodSugarData] = useState<BloodSugarData>({
     after_evening: 0,
     after_lunch: 0,
     after_morning: 0,
@@ -129,29 +131,28 @@ export default function Monthlycalendar() {
 
   // 혈당 데이터조회
   const getBloodSugarData = async () => {
-    const res = await fetch(
-      `${BASE_URL}/api/management/${selectedDay[0]}/${selectedDay[1]}/${selectedDay[2]}`,
-      {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${tokenInfo}`,
-        },
+    try {
+      const response = await authApiService.get(
+        `/api/management/${selectedDay[0]}/${selectedDay[1]}/${selectedDay[2]}`
+      );
+
+      const res = response.data;
+      if (
+        res.after_evening === 0 &&
+        res.after_lunch === 0 &&
+        res.after_morning === 0 &&
+        res.before_evening === 0 &&
+        res.before_lunch === 0 &&
+        res.before_morning === 0 &&
+        res.empty_stomach === 0
+      ) {
+        setIsData(false);
+      } else {
+        setIsData(true);
+        setBloodSugarData({ ...res });
       }
-    );
-    const resJson = await res.json();
-    if (
-      resJson.after_evening === 0 &&
-      resJson.after_lunch === 0 &&
-      resJson.after_morning === 0 &&
-      resJson.before_evening === 0 &&
-      resJson.before_lunch === 0 &&
-      resJson.before_morning === 0 &&
-      resJson.empty_stomach === 0
-    ) {
-      setIsData(false);
-    } else {
-      setIsData(true);
-      setBloodSugarData({ ...resJson });
+    } catch (error: any) {
+      console.error("데이터 조회 불가: ", error.message);
     }
   };
 
@@ -240,6 +241,7 @@ export default function Monthlycalendar() {
         isOpen={modalIsOpen}
         dateStr={dateFormatStr(selectedDate)}
         bloodSugarData={bloodSugarData}
+        setBloodSugarData={setBloodSugarData}
         closeModal={closeModal}
       />
     </div>

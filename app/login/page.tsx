@@ -83,9 +83,8 @@ export default function Login() {
       localStorage.setItem("access", accessToken);
       localStorage.setItem("refresh", refreshToken);
     } catch (error: any) {
-      console.error("Login failed:", error.message);
+      console.error("Login failed: ", error.message);
     }
-
     router.push("record");
   };
 

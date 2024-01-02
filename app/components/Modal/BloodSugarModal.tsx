@@ -1,17 +1,17 @@
+import { authApiService } from "@/app/services/apiService";
 import React, { useEffect, useState } from "react";
 
 interface BloodSugarData {
-  [key: string]: number | undefined;
+  [key: string]: number;
 }
 
 interface modalProps {
   isOpen: boolean;
   dateStr: string;
   bloodSugarData: BloodSugarData;
+  setBloodSugarData: React.Dispatch<React.SetStateAction<BloodSugarData>>;
   closeModal(): void;
 }
-
-const BASE_URL = "http://52.78.93.9:8000";
 
 const timeCategory = [
   { name: "아침", engName: "morning", imgSrc: "image/sunrise-icon.png" },
@@ -23,11 +23,10 @@ export default function BloodSugarModal({
   isOpen,
   dateStr,
   bloodSugarData,
+  setBloodSugarData,
   closeModal,
 }: modalProps) {
   const selectedDay = dateStr.split("-");
-  const tokenInfo = localStorage.getItem("token");
-
   const [updatedBloodSugarData, setUpdatedBloodSugarData] =
     useState<BloodSugarData>(bloodSugarData);
 
@@ -42,28 +41,26 @@ export default function BloodSugarModal({
     const { value } = e.target;
     setUpdatedBloodSugarData((prevData) => ({
       ...prevData,
-      [key]: value ? parseFloat(value) : undefined,
+      [key]: parseFloat(value),
     }));
   };
 
   // 혈당 데이터 등록
-  const handleDataSubmit = async () => {
-    const res = await fetch(
-      `${BASE_URL}/api/management/${selectedDay[0]}/${selectedDay[1]}/${selectedDay[2]}/`,
-      {
-        method: "PUT",
-        headers: {
-          authorization: `Bearer ${tokenInfo}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedBloodSugarData),
-      }
-    );
+  const handleDataSubmit = async (event: any) => {
+    event.preventDefault();
 
-    if (res.ok) {
-      console.log("Data successfully submitted");
-    } else {
-      console.error("Failed to submit data", res.status);
+    try {
+      const response = await authApiService.put(
+        `/api/management/${selectedDay[0]}/${selectedDay[1]}/${selectedDay[2]}/`,
+        updatedBloodSugarData
+      );
+
+      if (response.status === 200) {
+        setBloodSugarData(updatedBloodSugarData);
+        closeModal();
+      }
+    } catch (error: any) {
+      console.log("데이터를 등록할 수 없습니다: ", error.message);
     }
   };
 
