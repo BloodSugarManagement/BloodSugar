@@ -17,5 +17,5 @@ interface Category {
 
 interface GraphProps {
   data: BloodSugarData[];
-  YKey: string;
+  YKey: string[];
 }
