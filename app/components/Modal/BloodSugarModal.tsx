@@ -1,5 +1,5 @@
 import { authApiService } from "../../services/apiService";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface BloodSugarData {
   [key: string]: number;
