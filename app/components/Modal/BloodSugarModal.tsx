@@ -27,8 +27,6 @@ export default function BloodSugarModal({
   closeModal,
 }: modalProps) {
   const selectedDay = dateStr.split("-");
-  const tokenInfo = localStorage.getItem("access");
-
   const [updatedBloodSugarData, setUpdatedBloodSugarData] =
     useState<BloodSugarData>(bloodSugarData);
 

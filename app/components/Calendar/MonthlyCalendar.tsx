@@ -16,8 +16,6 @@ interface BloodSugarData {
 }
 
 export default function Monthlycalendar() {
-  const tokenInfo = localStorage.getItem("access");
-
   const [currentTab, setTab] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isData, setIsData] = useState(false);

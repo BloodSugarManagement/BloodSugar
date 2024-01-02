@@ -85,7 +85,6 @@ export default function Login() {
     } catch (error: any) {
       console.error("Login failed: ", error.message);
     }
-
     router.push("record");
   };
 

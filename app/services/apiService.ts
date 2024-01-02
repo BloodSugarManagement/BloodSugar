@@ -1,42 +1,58 @@
 import axios from "axios";
 import { postRefreshToken } from "./auth";
+import { error } from "console";
 
 const BASE_URL = "http://52.78.93.9:8000";
 
-const accessToken = localStorage.getItem("token");
-
-export const apiService = axios.create({
+const commonConfig = {
   baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
-});
+};
 
-export const authApiService = axios.create({
-  baseURL: BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+export const apiService = axios.create(commonConfig);
+export const authApiService = axios.create(commonConfig);
 
 authApiService.interceptors.request.use(
-  async (config) => {
-    const refreshToken = await getRefreshToken();
+  (config) => {
+    const accessToken = localStorage.getItem("access");
 
-    if (refreshToken) {
-      try {
-        const newAccessToken = await postRefreshToken(refreshToken);
-        config.headers.Authorization = `Bearer ${newAccessToken}`;
-        return config;
-      } catch (error) {
-        return Promise.reject("액세스 토큰 갱신에 실패하였습니다.");
-      }
-    } else {
-      alert("로그인이 필요합니다.");
-      return Promise.reject("로그인이 필요합니다.");
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
+    return config;
   },
   (error) => {
+    return Promise.reject(error);
+  }
+);
+
+authApiService.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response.status === 401 && originalRequest._retry) {
+      originalRequest._retry = true;
+
+      const refreshResponse = getRefreshToken();
+      if (refreshResponse) {
+        try {
+          const newAccessToken = await postRefreshToken(refreshResponse);
+          localStorage.setItem("access", newAccessToken);
+
+          const newRequestConfig = { ...originalRequest };
+          newRequestConfig.headers.Authorization = `Bearer ${newAccessToken}`;
+          return apiService(originalRequest);
+        } catch (error) {
+          console.error("새로운 token발급에 실패했습니다: ", error);
+          // 새로운 token발급에 실패시 로그아웃 처리 넣기
+        }
+      }
+    }
     return Promise.reject(error);
   }
 );
