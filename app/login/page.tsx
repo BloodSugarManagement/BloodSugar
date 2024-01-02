@@ -10,6 +10,7 @@ import ErrorTxt from "../components/ErrorTxt";
 import { formValidate } from "../utils/formValidate";
 import regex from "../utils/regex";
 import { apiService } from "../services/apiService";
+import NavLayout from "../components/NavLayout";
 
 export default function Login() {
   const router = useRouter();
@@ -89,9 +90,12 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <NavLayout>
       <TitleTxt titleTxt="로그인" />
-      <form onSubmit={handleLogin}>
+      <form
+        onSubmit={handleLogin}
+        className="flex flex-col items-center p-2.5 bg-white"
+      >
         <AuthInput
           name="email"
           htmlFor="email"
@@ -124,6 +128,6 @@ export default function Login() {
         <img src="/image/naver.svg" />
         <img src="/image/google.svg" />
       </div>
-    </div>
+    </NavLayout>
   );
 }

@@ -1,4 +1,3 @@
-import React from "react";
 import NavBar from "./NavBar";
 
 export default function NavLayout({ children }: { children: React.ReactNode }) {

@@ -1,5 +1,3 @@
-import React from "react";
-
 interface BloodSugarData {
   [key: string]: number | undefined;
 }

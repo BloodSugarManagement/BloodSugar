@@ -25,7 +25,7 @@ export default function AuthInput(props: AuthInputProps) {
     ...restProps
   } = props;
   return (
-    <>
+    <div>
       <label htmlFor={htmlFor} className="text-lg block font-medium mb-2 mt-8 ">
         {labelTxt}
       </label>
@@ -40,6 +40,6 @@ export default function AuthInput(props: AuthInputProps) {
         required
         {...restProps}
       />
-    </>
+    </div>
   );
 }
