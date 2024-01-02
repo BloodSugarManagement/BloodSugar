@@ -13,10 +13,10 @@ const dateFilter = {
   "31일": "month",
 };
 const timeFilter = {
-  공복: "empty_stomach",
-  아침: "morning",
-  점심: "lunch",
-  저녁: "evening",
+  공복: ["empty_stomach"],
+  아침: ["before_morning", "after_morning"],
+  점심: ["before_lunch", "after_lunch"],
+  저녁: ["before_evening", "after_evening"],
 };
 ///
 
@@ -30,9 +30,7 @@ export default function ChartForm() {
   ///
 
   const fetchData = async () => {
-    // const token = localStorage.getItem('token');
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAxNzczOTczLCJpYXQiOjE3MDE3NjY3NzMsImp0aSI6ImM4NzdkN2Y1YzVlNzQzYTJiNDc1MDZlZDA1YTIyM2E1IiwidXNlcl9pZCI6N30.nxjEe5Eh38fr3NAPbrL6HsIQ9Ew1bOrH419tvqa57ww";
+    const token = localStorage.getItem("access");
 
     if (token) {
       const res = await fetch(`${apiUrl}${dateFilter[category.날짜]}/`, {
@@ -49,8 +47,15 @@ export default function ChartForm() {
           (a, b) => +new Date(a["created_at"]) - +new Date(b["created_at"])
         );
         setData(sorted);
+      } else {
+        alert("토큰이 만료되었습니다. 다시 로그인 해주세요.");
+        if (localStorage) {
+          localStorage.removeItem("access");
+        }
+        window.location.assign("login");
       }
     } else {
+      alert("로그인이 필요한 서비스입니다.");
       window.location.assign("login");
     }
   };
