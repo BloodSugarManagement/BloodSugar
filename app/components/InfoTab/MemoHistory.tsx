@@ -1,3 +1,4 @@
+import { authApiService } from "@/app/services/apiService";
 import React, { useEffect, useState } from "react";
 
 interface MemoHistoryProps {
@@ -5,45 +6,42 @@ interface MemoHistoryProps {
 }
 
 export default function memoHistory({ dateStr }: MemoHistoryProps) {
-  const tokenInfo = localStorage.getItem("token");
   const selectedDay = dateStr.split("-");
-  const [memoData, setMemoData] = useState<string | null>(null);
+  const [memoData, setMemoData] = useState<string | undefined>();
 
   useEffect(() => {
-    console.log("memo");
     const fetchMemoData = async () => {
       try {
         if (dateStr) {
-          const res = await fetch(
-            `http://52.78.93.9:8000/api/management/${selectedDay[0]}/${selectedDay[1]}/${selectedDay[2]}/feedback/`,
-            {
-              method: "GET",
-              headers: {
-                authorization: `Bearer ${tokenInfo}`,
-              },
-            }
+          const response = await authApiService.get(
+            `/api/management/${selectedDay[0]}/${selectedDay[1]}/${selectedDay[2]}/feedback/`
           );
 
-          if (res.ok) {
-            const data = await res.json();
-            setMemoData(data.memo);
-          } else {
-            console.error("Failed to fetch memo data", res.status);
-            setMemoData(null);
+          if (response.status === 200) {
+            setMemoData(response.data.content);
           }
         }
-      } catch (error) {
-        console.error("An error occurred while fetching memo data:", error);
+      } catch (error: any) {
+        console.error("메모를 불러오지 못했습니다:", error.message);
         setMemoData(null);
       }
     };
 
     fetchMemoData();
-  }, [dateStr, tokenInfo]);
+  }, [dateStr]);
+
+  const handleMemoChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setMemoValue(event.target.value);
+  };
 
   return (
-    <div className="min-h-[200px] my-3 rounded-lg bg-[#F5F0D4] text-center">
-      {memoData ? <p>{memoData}</p> : <p>메모가 없습니다.</p>}
-    </div>
+    <form action="handleMemoSubmit">
+      <textarea
+        onChange={handleMemoChange}
+        name="memo"
+        value={memoData}
+        className="min-h-[200px] my-3 rounded-lg bg-[#F5F0D4] text-center"
+      ></textarea>
+    </form>
   );
 }

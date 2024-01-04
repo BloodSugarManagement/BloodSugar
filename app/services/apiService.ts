@@ -35,10 +35,11 @@ authApiService.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response.status === 401 && originalRequest._retry) {
+    if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       const refreshResponse = getRefreshToken();
+
       if (refreshResponse) {
         try {
           const newAccessToken = await postRefreshToken(refreshResponse);
@@ -58,5 +59,5 @@ authApiService.interceptors.response.use(
 );
 
 const getRefreshToken = () => {
-  return localStorage.getItem("refreshToken");
+  return localStorage.getItem("refresh");
 };

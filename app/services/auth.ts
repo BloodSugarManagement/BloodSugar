@@ -1,8 +1,10 @@
 import { apiService, authApiService } from "./apiService";
 
-export const postRefreshToken = async (token: string | undefined) => {
+export const postRefreshToken = async (refreshToken: string | undefined) => {
   try {
-    const res = await apiService.post("/accounts/token/refresh/");
+    const res = await apiService.post("/accounts/token/refresh/", {
+      refresh: refreshToken,
+    });
     console.log("리프레쉬", res.data.access);
     return res.data.access;
   } catch (error) {

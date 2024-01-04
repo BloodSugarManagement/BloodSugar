@@ -46,7 +46,7 @@ export default function BloodSugarModal({
   };
 
   // 혈당 데이터 등록
-  const handleDataSubmit = async (event: any) => {
+  const handleBloodDataSubmit = async (event: any) => {
     event.preventDefault();
 
     try {
@@ -81,7 +81,7 @@ export default function BloodSugarModal({
         >
           X
         </button>
-        <form onSubmit={handleDataSubmit} className="w-full h-full">
+        <form onSubmit={handleBloodDataSubmit} className="w-full h-full">
           <table className="w-full h-full">
             <thead className="border-b border-b-inherit">
               <tr>
