@@ -115,7 +115,9 @@ export default function Monthlycalendar() {
   const tabArr = [
     {
       name: "혈당기록",
-      content: <BloodSugarHistory isData={isData} data={bloodSugarData} />,
+      content: (
+        <BloodSugarHistory isData={isData} bloodSugarData={bloodSugarData} />
+      ),
     },
     {
       name: "메모",
@@ -147,6 +149,7 @@ export default function Monthlycalendar() {
         res.empty_stomach === 0
       ) {
         setIsData(false);
+        setBloodSugarData({ ...res });
       } else {
         setIsData(true);
         setBloodSugarData({ ...res });
@@ -240,6 +243,7 @@ export default function Monthlycalendar() {
       <BloodSugarModal
         isOpen={modalIsOpen}
         dateStr={dateFormatStr(selectedDate)}
+        setIsData={setIsData}
         bloodSugarData={bloodSugarData}
         setBloodSugarData={setBloodSugarData}
         closeModal={closeModal}
