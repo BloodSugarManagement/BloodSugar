@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { GrPrevious } from "react-icons/gr";
 import { GrNext } from "react-icons/gr";
 import { BsPlusCircleFill } from "react-icons/bs";
