@@ -1,9 +1,10 @@
 import { apiService, authApiService } from "./apiService";
 
-export const postRefreshToken = async (token: string | undefined) => {
+export const postRefreshToken = async (refreshToken: string | undefined) => {
   try {
-    const res = await apiService.post("/accounts/token/refresh/");
-    console.log("리프레쉬", res.data.access);
+    const res = await apiService.post("/accounts/token/refresh/", {
+      refresh: refreshToken,
+    });
     return res.data.access;
   } catch (error) {
     console.log("새로운 token발급에 실패했습니다: ", error);

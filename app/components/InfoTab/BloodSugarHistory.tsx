@@ -1,17 +1,24 @@
+import { useEffect } from "react";
+
 interface BloodSugarData {
-  [key: string]: number | undefined;
+  [key: string]: number;
 }
 interface bsTabProps {
   isData: boolean;
-  data: BloodSugarData;
+  bloodSugarData: BloodSugarData;
 }
 
-export default function BloodSugarHistory({ isData, data }: bsTabProps) {
+export default function BloodSugarHistory({
+  isData,
+  bloodSugarData,
+}: bsTabProps) {
   const timeCategory = [
     { name: "아침", engName: "morning", imgSrc: "image/sunrise-icon.png" },
     { name: "점심", engName: "lunch", imgSrc: "image/sun-icon.png" },
     { name: "저녁", engName: "evening", imgSrc: "image/moon-icon.png" },
   ];
+
+  console.log("data", isData);
 
   return (
     <section className="grid p-2.5 relative min-h-[300px] my-3 rounded-lg bg-[#F5F0D4] text-center">
@@ -34,8 +41,8 @@ export default function BloodSugarHistory({ isData, data }: bsTabProps) {
                     className="w-[100px] h-[100px] inline"
                   />
                   <span>{" " + category.name}</span>
-                  <span>{data[beforeKey]}</span> mg/dL
-                  <span>{data[afterKey]}</span> mg/dL
+                  <span>{bloodSugarData[beforeKey]}</span> mg/dL
+                  <span>{bloodSugarData[afterKey]}</span> mg/dL
                 </div>
               );
             })}

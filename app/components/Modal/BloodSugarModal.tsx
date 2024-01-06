@@ -8,12 +8,13 @@ interface BloodSugarData {
 interface modalProps {
   isOpen: boolean;
   dateStr: string;
+  setIsData: React.Dispatch<React.SetStateAction<boolean>>;
   bloodSugarData: BloodSugarData;
   setBloodSugarData: React.Dispatch<React.SetStateAction<BloodSugarData>>;
   closeModal(): void;
 }
 
-const timeCategory = [
+const TIME_CATEGORIES = [
   { name: "아침", engName: "morning", imgSrc: "image/sunrise-icon.png" },
   { name: "점심", engName: "lunch", imgSrc: "image/sun-icon.png" },
   { name: "저녁", engName: "evening", imgSrc: "image/moon-icon.png" },
@@ -22,6 +23,7 @@ const timeCategory = [
 export default function BloodSugarModal({
   isOpen,
   dateStr,
+  setIsData,
   bloodSugarData,
   setBloodSugarData,
   closeModal,
@@ -46,7 +48,7 @@ export default function BloodSugarModal({
   };
 
   // 혈당 데이터 등록
-  const handleDataSubmit = async (event: any) => {
+  const handleBloodSugarSubmit = async (event: any) => {
     event.preventDefault();
 
     try {
@@ -56,9 +58,23 @@ export default function BloodSugarModal({
       );
 
       if (response.status === 200) {
-        setBloodSugarData(updatedBloodSugarData);
-        closeModal();
+        await setBloodSugarData(updatedBloodSugarData);
+
+        if (
+          response.data.after_evening === 0 &&
+          response.data.after_lunch === 0 &&
+          response.data.after_morning === 0 &&
+          response.data.before_evening === 0 &&
+          response.data.before_lunch === 0 &&
+          response.data.before_morning === 0 &&
+          response.data.empty_stomach === 0
+        ) {
+          setIsData(false);
+        } else {
+          setIsData(true);
+        }
       }
+      closeModal();
     } catch (error: any) {
       console.log("데이터를 등록할 수 없습니다: ", error.message);
     }
@@ -81,7 +97,7 @@ export default function BloodSugarModal({
         >
           X
         </button>
-        <form onSubmit={handleDataSubmit} className="w-full h-full">
+        <form onSubmit={handleBloodSugarSubmit} className="w-full h-full">
           <table className="w-full h-full">
             <thead className="border-b border-b-inherit">
               <tr>
@@ -91,7 +107,7 @@ export default function BloodSugarModal({
               </tr>
             </thead>
             <tbody>
-              {timeCategory.map((category) => {
+              {TIME_CATEGORIES.map((category) => {
                 const beforeKey = `before_${category.engName}`;
                 const afterKey = `after_${category.engName}`;
 
