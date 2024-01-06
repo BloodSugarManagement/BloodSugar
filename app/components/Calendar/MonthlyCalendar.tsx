@@ -107,7 +107,6 @@ export default function Monthlycalendar() {
 
   // 날짜별 혈당 보기
   const selectDate = (selectDate: Date) => {
-    //console.log("혈당보기 함수 돔");
     setSelectedDate(selectDate);
   };
 

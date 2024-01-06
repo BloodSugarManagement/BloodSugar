@@ -4,7 +4,7 @@ import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import AuthInput from "../components/AuthInput";
-import AuthBtn from "../components/AuthBtn";
+import AuthBtn from "../components/BtnComponents/AuthBtn";
 import TitleTxt from "../components/Titletxt";
 import ErrorTxt from "../components/ErrorTxt";
 import { formValidate } from "../utils/formValidate";
