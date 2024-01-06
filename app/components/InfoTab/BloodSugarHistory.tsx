@@ -18,8 +18,6 @@ export default function BloodSugarHistory({
     { name: "저녁", engName: "evening", imgSrc: "image/moon-icon.png" },
   ];
 
-  console.log("data", isData);
-
   return (
     <section className="grid p-2.5 relative min-h-[300px] my-3 rounded-lg bg-[#F5F0D4] text-center">
       {isData ? (

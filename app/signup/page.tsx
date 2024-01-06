@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import AuthInput from "../components/AuthInput";
-import AuthBtn from "../components/AuthBtn";
+import AuthBtn from "../components/BtnComponents/AuthBtn";
 import TitleTxt from "../components/Titletxt";
 import SelectAge from "./SelectAge";
 import { formValidate } from "../utils/formValidate";
