@@ -1,10 +1,12 @@
 import NavLayout from "../components/NavLayout";
 import ChartForm from "../components/Chart/ChartForm";
 import TitleTxt from "../components/Titletxt";
+import LogOutBtn from "../components/BtnComponents/LogOutBtn";
 
 export default function Chart() {
   return (
     <NavLayout>
+      <LogOutBtn />
       <TitleTxt titleTxt="혈당 차트" />
       <ChartForm />
       <img
