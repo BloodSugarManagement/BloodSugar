@@ -8,7 +8,6 @@ interface MemoHistoryProps {
 export default function memoHistory({ dateStr }: MemoHistoryProps) {
   const selectedDay = dateStr.split("-");
   const [memoValue, setMemoValue] = useState<string>("");
-  //const [memoData];
 
   const getMemoData = async () => {
     try {
@@ -28,27 +27,29 @@ export default function memoHistory({ dateStr }: MemoHistoryProps) {
 
   useEffect(() => {
     getMemoData();
-  }, []);
+  }, [dateStr]);
+
+  const handleMemoChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = event.target;
+    setMemoValue(value);
+  };
 
   const handleMemoSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
+      console.log(dateStr);
       const response = await authApiService.put(
         `/api/management/${selectedDay[0]}/${selectedDay[1]}/${selectedDay[2]}/feedback/`,
-        { content: memoValue }
+        { content: memoValue, created_at: dateStr }
       );
+
       if (response.status === 200) {
-        await getMemoData();
+        console.log("성공", response.data);
       }
     } catch (error: any) {
       console.log("메모를 등록하지 못했습니다: ", error.message);
     }
-  };
-
-  const handleMemoChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { value } = event.target;
-    setMemoValue(value);
   };
 
   return (

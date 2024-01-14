@@ -35,9 +35,7 @@ export default function Login() {
   const isFormValid = isValid.email && isValid.password;
 
   const handleAuthInputChange = (e: any) => {
-    // 입력 값 업데이트
     const { value, name } = e.target;
-    console.log(e.target);
     setAuthInp({
       ...authInp,
       [name]: value,

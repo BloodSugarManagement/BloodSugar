@@ -1,6 +1,5 @@
 import axios from "axios";
 import { postRefreshToken } from "./auth";
-import { error } from "console";
 
 const BASE_URL = "http://52.78.93.9:8000";
 
