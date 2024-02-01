@@ -8,6 +8,7 @@ import SelectAge from "./SelectAge";
 import { formValidate } from "../utils/formValidate";
 import regex from "../utils/regex";
 import ErrorTxt from "../components/ErrorTxt";
+import NavLayout from "../components/NavLayout";
 
 export default function SignUp() {
   const [authForm, setAuthForm] = useState({

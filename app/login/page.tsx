@@ -11,6 +11,9 @@ import { formValidate } from "../utils/formValidate";
 import regex from "../utils/regex";
 import { apiService } from "../services/apiService";
 import NavLayout from "../components/NavLayout";
+import SocialBtn from "../components/BtnComponents/SocialBtn";
+
+const SOCIAL_IMG = ["kakao", "google", "naver"];
 
 export default function Login() {
   const router = useRouter();
@@ -84,48 +87,60 @@ export default function Login() {
     } catch (error: any) {
       console.error("Login failed: ", error.message);
     }
-    router.push("record");
+    router.push("/record");
+  };
+
+  const moveToSignUp = () => {
+    router.push("/signup");
   };
 
   return (
     <NavLayout>
       <TitleTxt titleTxt="로그인" />
-      <form
-        onSubmit={handleLogin}
-        className="flex flex-col items-center p-2.5 bg-white"
-      >
-        <AuthInput
-          name="email"
-          htmlFor="email"
-          id="email"
-          labelTxt="이메일"
-          placeholder="예) welcome@naver.com"
-          type="text"
-          value={authInp.email}
-          onChange={handleAuthInputChange}
-        />
-        {error.emailErrorTxt && <ErrorTxt errorTxt={error.emailErrorTxt} />}
-        <AuthInput
-          name="password"
-          htmlFor="password"
-          id="password"
-          labelTxt="비밀번호"
-          placeholder="숫자 포함 8글자 이상 입력해주세요"
-          type="password"
-          value={authInp.password}
-          onChange={handleAuthInputChange}
-        />
-        {error.passwordErrorTxt && (
-          <ErrorTxt errorTxt={error.passwordErrorTxt} />
-        )}
-        <AuthBtn btnTxt={"이메일로 로그인하기"} disabled={!isFormValid} />
-      </form>
-      <p className="text-sm text-center mt-8">이메일로 회원가입</p>
-      <div className="flex justify-center gap-8 mt-8">
-        <img src="/image/kakao.svg" />
-        <img src="/image/naver.svg" />
-        <img src="/image/google.svg" />
-      </div>
+      <section className="flex flex-col justify-center">
+        <form
+          onSubmit={handleLogin}
+          className="flex flex-col items-center p-2.5 bg-white"
+        >
+          <AuthInput
+            name="email"
+            htmlFor="email"
+            id="email"
+            labelTxt="이메일"
+            placeholder="예) welcome@naver.com"
+            type="text"
+            value={authInp.email}
+            onChange={handleAuthInputChange}
+          />
+          {error.emailErrorTxt && <ErrorTxt errorTxt={error.emailErrorTxt} />}
+          <AuthInput
+            name="password"
+            htmlFor="password"
+            id="password"
+            labelTxt="비밀번호"
+            placeholder="숫자 포함 8글자 이상 입력해주세요"
+            type="password"
+            value={authInp.password}
+            onChange={handleAuthInputChange}
+          />
+          {error.passwordErrorTxt && (
+            <ErrorTxt errorTxt={error.passwordErrorTxt} />
+          )}
+          <AuthBtn btnTxt={"이메일로 로그인하기"} disabled={!isFormValid} />
+        </form>
+        <button
+          type="button"
+          onClick={moveToSignUp}
+          className="mt-8 text-sm text-center"
+        >
+          이메일로 회원가입
+        </button>
+        <div className="flex justify-center gap-8 mt-8">
+          {SOCIAL_IMG.map((imgNme, index) => {
+            return <SocialBtn key={index} imgNme={imgNme} />;
+          })}
+        </div>
+      </section>
     </NavLayout>
   );
 }
