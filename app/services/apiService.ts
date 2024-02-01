@@ -1,7 +1,7 @@
 import axios from "axios";
 import { postRefreshToken } from "./auth";
 
-const BASE_URL = "http://52.78.93.9:8000";
+const BASE_URL = "http://3.36.57.218:8000";
 
 const commonConfig = {
   baseURL: BASE_URL,

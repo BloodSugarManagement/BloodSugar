@@ -57,6 +57,11 @@ const config: Config = {
           to: { opacity: "1" },
         },
       },
+      backgroundImage: {
+        "kakao-img": "url('/image/kakao.svg')",
+        "google-img": "url('/image/google.svg')",
+        "naver-img": "url('/image/naver.svg')",
+      },
     },
     plugins: [],
   },
