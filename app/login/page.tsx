@@ -97,6 +97,7 @@ export default function Login() {
   return (
     <NavLayout>
       <TitleTxt titleTxt="로그인" />
+
       <section className="flex flex-col justify-center">
         <form
           onSubmit={handleLogin}
